@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Usability Timer Tracker</title>
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --card: #ffffff;
+    --border: #e2e0d8;
+    --text: #1f1e1c;
+    --text-secondary: #6b6a64;
+    --accent: #185fa5;
+    --accent-bg: #e6f1fb;
+    --danger: #e24b4a;
+    --danger-bg: #fcebeb;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 24px;
+  }
+  label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 6px;
+  }
+  input[type="text"] {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0 12px;
+    font-size: 15px;
+    background: var(--card);
+    color: var(--text);
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+  button {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.1s, transform 0.05s;
+  }
+  button:hover { background: #fafaf8; }
+  button:active { transform: scale(0.98); }
+  button:disabled { opacity: 0.45; cursor: default; }
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    padding: 12px;
+    font-size: 15px;
+  }
+  .btn-primary:hover { background: #134f8c; }
+  .btn-block { width: 100%; }
+  .btn-danger-outline { color: var(--danger); border-color: var(--danger-bg); }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .task-label { font-size: 14px; font-weight: 600; }
+  .timer-display {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    letter-spacing: 0.5px;
+  }
+  .btn-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .btn-row button { flex: 1; font-size: 13px; }
+  .counter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .counter {
+    background: var(--bg);
+    border-radius: var(--radius-md);
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .counter-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .counter-controls button {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .counter-value {
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+  }
+  .session-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .session-header .name { font-size: 18px; font-weight: 600; }
+  .session-header .meta-label { font-size: 12px; color: var(--text-secondary); margin: 0; }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .stat-box {
+    background: var(--bg);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .stat-box .num { font-size: 28px; font-weight: 600; }
+  .stat-box .lbl { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+  .hidden { display: none !important; }
+  .footer-note {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 24px;
+    line-height: 1.5;
+  }
+  .table-preview {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 12px;
+  }
+  .table-preview th, .table-preview td {
+    border-bottom: 1px solid var(--border);
+    padding: 6px 4px;
+    text-align: left;
+  }
+  .table-preview th { color: var(--text-secondary); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Usability timer tracker</h1>
+  <p class="sub">Pelacak waktu, error, dan klik per task untuk task-based usability testing.</p>
+
+  <!-- SETUP SCREEN -->
+  <div id="setup-screen">
+    <div style="margin-bottom: 16px;">
+      <label for="task-count-input">Jumlah task per responden</label>
+      <input type="text" id="task-count-input" value="6" inputmode="numeric" />
+    </div>
+    <div style="margin-bottom: 20px;">
+      <label for="respondent-name">Nama / ID responden</label>
+      <input type="text" id="respondent-name" placeholder="contoh: R01" />
+    </div>
+    <button class="btn-primary" id="start-session-btn">Mulai sesi testing</button>
+
+    <div id="prior-data-note" class="footer-note hidden"></div>
+  </div>
+
+  <!-- SESSION SCREEN -->
+  <div id="session-screen" class="hidden">
+    <div class="session-header">
+      <div>
+        <p class="meta-label">Responden</p>
+        <p class="name" id="session-name">R01</p>
+      </div>
+      <button class="btn-danger-outline" id="end-session-btn">Selesai responden</button>
+    </div>
+    <div id="task-list"></div>
+  </div>
+
+  <!-- EXPORT / SUMMARY SCREEN -->
+  <div id="export-screen" class="hidden">
+    <div class="stat-box">
+      <div class="num" id="respondent-count">0</div>
+      <div class="lbl">responden tercatat</div>
+    </div>
+    <button class="btn-primary" id="export-btn">Export semua data (CSV)</button>
+    <button class="btn-block" id="new-respondent-btn" style="margin-top:8px;">Tambah responden baru</button>
+    <button class="btn-block btn-danger-outline" id="clear-all-btn" style="margin-top:8px;">Hapus semua data</button>
+
+    <table class="table-preview" id="preview-table"></table>
+  </div>
+
+  <p class="footer-note">
+    Data disimpan secara lokal di browser perangkat ini (localStorage).
+    Export ke CSV secara berkala agar data tidak hilang jika cache browser dibersihkan.
+  </p>
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'usability_timer_sessions_v1';
+
+  function loadSessions() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveSessions(sessions) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+    } catch (e) {
+      console.error('Gagal menyimpan ke localStorage', e);
+    }
+  }
+
+  var sessions = loadSessions();
+  var current = null;
+  var taskCount = 6;
+
+  function makeTaskState(i) {
+    return { task: i + 1, running: false, startTs: null, elapsedMs: 0, errors: 0, clicks: 0 };
+  }
+
+  function newSession(name, count) {
+    var tasks = [];
+    for (var i = 0; i < count; i++) tasks.push(makeTaskState(i));
+    return { name: name, tasks: tasks, createdAt: new Date().toISOString() };
+  }
+
+  function fmt(ms) {
+    var totalSec = Math.floor(ms / 1000);
+    var m = Math.floor(totalSec / 60);
+    var s = totalSec % 60;
+    var cs = Math.floor((ms % 1000) / 10);
+    return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s + '.' + (cs < 10 ? '0' : '') + cs;
+  }
+
+  function el(tag, props, children) {
+    var node = document.createElement(tag);
+    if (props) {
+      Object.keys(props).forEach(function (k) {
+        if (k === 'style') {
+          Object.assign(node.style, props.style);
+        } else if (k === 'class') {
+          node.className = props[k];
+        } else if (k === 'text') {
+          node.textContent = props[k];
+        } else if (k === 'html') {
+          node.innerHTML = props[k];
+        } else if (k.indexOf('on') === 0) {
+          node.addEventListener(k.slice(2), props[k]);
+        } else {
+          node.setAttribute(k, props[k]);
+        }
+      });
+    }
+    (children || []).forEach(function (c) { node.appendChild(c); });
+    return node;
+  }
+
+  function renderTasks() {
+    var list = document.getElementById('task-list');
+    list.innerHTML = '';
+    current.tasks.forEach(function (t, idx) {
+      var timeOut = el('span', { class: 'timer-display', id: 'time-' + idx, text: fmt(t.elapsedMs) });
+      var topRow = el('div', { class: 'row' }, [
+        el('span', { class: 'task-label', text: 'Task ' + t.task }),
+        timeOut
+      ]);
+
+      var startBtn = el('button', {
+        text: t.running ? 'Berjalan' : (t.elapsedMs > 0 ? 'Lanjut' : 'Mulai'),
+        disabled: t.running ? 'true' : null
+      });
+      if (t.running) startBtn.disabled = true;
+      startBtn.addEventListener('click', function () {
+        if (t.running) return;
+        t.running = true;
+        t.startTs = Date.now() - t.elapsedMs;
+        persistCurrentIntoSessionsDraft();
+        renderTasks();
+      });
+
+      var stopBtn = el('button', { text: 'Stop' });
+      stopBtn.disabled = !t.running;
+      stopBtn.addEventListener('click', function () {
+        if (!t.running) return;
+        t.elapsedMs = Date.now() - t.startTs;
+        t.running = false;
+        persistCurrentIntoSessionsDraft();
+        renderTasks();
+      });
+
+      var resetBtn = el('button', { text: '↺', 'aria-label': 'Reset task' });
+      resetBtn.addEventListener('click', function () {
+        t.running = false;
+        t.elapsedMs = 0;
+        t.startTs = null;
+        persistCurrentIntoSessionsDraft();
+        renderTasks();
+      });
+
+      var btnRow = el('div', { class: 'btn-row' }, [startBtn, stopBtn, resetBtn]);
+
+      function makeCounter(labelText, key) {
+        var valSpan = el('span', { class: 'counter-value', text: String(t[key]) });
+        var minus = el('button', { text: '–', 'aria-label': 'Kurangi ' + labelText });
+        minus.addEventListener('click', function () {
+          t[key] = Math.max(0, t[key] - 1);
+          valSpan.textContent = t[key];
+          persistCurrentIntoSessionsDraft();
+        });
+        var plus = el('button', { text: '+', 'aria-label': 'Tambah ' + labelText });
+        plus.addEventListener('click', function () {
+          t[key] = t[key] + 1;
+          valSpan.textContent = t[key];
+          persistCurrentIntoSessionsDraft();
+        });
+        return el('div', { class: 'counter' }, [
+          el('span', { class: 'counter-label', text: labelText }),
+          el('div', { class: 'counter-controls' }, [minus, valSpan, plus])
+        ]);
+      }
+
+      var counterGrid = el('div', { class: 'counter-grid' }, [
+        makeCounter('Error', 'errors'),
+        makeCounter('Klik', 'clicks')
+      ]);
+
+      var card = el('div', { class: 'card' }, [topRow, btnRow, counterGrid]);
+      list.appendChild(card);
+    });
+  }
+
+  var draftKey = 'usability_timer_draft_v1';
+  function persistCurrentIntoSessionsDraft() {
+    if (current) localStorage.setItem(draftKey, JSON.stringify(current));
+  }
+  function clearDraft() {
+    localStorage.removeItem(draftKey);
+  }
+
+  setInterval(function () {
+    if (!current) return;
+    current.tasks.forEach(function (t, idx) {
+      if (t.running) {
+        var node = document.getElementById('time-' + idx);
+        if (node) node.textContent = fmt(Date.now() - t.startTs);
+      }
+    });
+  }, 100);
+
+  function showScreen(id) {
+    ['setup-screen', 'session-screen', 'export-screen'].forEach(function (s) {
+      document.getElementById(s).classList.toggle('hidden', s !== id);
+    });
+  }
+
+  function renderExportScreen() {
+    document.getElementById('respondent-count').textContent = sessions.length;
+    var table = document.getElementById('preview-table');
+    if (sessions.length === 0) {
+      table.innerHTML = '';
+      return;
+    }
+    var rows = '<tr><th>Responden</th><th>Task</th><th>Waktu</th><th>Error</th><th>Klik</th></tr>';
+    sessions.forEach(function (s) {
+      s.tasks.forEach(function (t) {
+        rows += '<tr><td>' + escapeHtml(s.name) + '</td><td>' + t.task + '</td><td>' + fmt(t.elapsedMs) + '</td><td>' + t.errors + '</td><td>' + t.clicks + '</td></tr>';
+      });
+    });
+    table.innerHTML = rows;
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  document.getElementById('start-session-btn').addEventListener('click', function () {
+    var countInput = document.getElementById('task-count-input');
+    var parsedCount = parseInt(countInput.value, 10);
+    taskCount = (isFinite(parsedCount) && parsedCount > 0) ? parsedCount : 6;
+
+    var nameInput = document.getElementById('respondent-name');
+    var name = nameInput.value.trim() || ('R' + String(sessions.length + 1).padStart(2, '0'));
+    current = newSession(name, taskCount);
+    persistCurrentIntoSessionsDraft();
+    document.getElementById('session-name').textContent = name;
+    showScreen('session-screen');
+    renderTasks();
+  });
+
+  document.getElementById('end-session-btn').addEventListener('click', function () {
+    if (!current) return;
+    current.tasks.forEach(function (t) {
+      if (t.running) {
+        t.elapsedMs = Date.now() - t.startTs;
+        t.running = false;
+      }
+    });
+    sessions.push(current);
+    saveSessions(sessions);
+    clearDraft();
+    current = null;
+    showScreen('export-screen');
+    renderExportScreen();
+  });
+
+  document.getElementById('new-respondent-btn').addEventListener('click', function () {
+    document.getElementById('respondent-name').value = '';
+    showScreen('setup-screen');
+  });
+
+  document.getElementById('clear-all-btn').addEventListener('click', function () {
+    if (!confirm('Hapus semua data responden yang tersimpan? Tindakan ini tidak bisa dibatalkan.')) return;
+    sessions = [];
+    saveSessions(sessions);
+    clearDraft();
+    renderExportScreen();
+  });
+
+  document.getElementById('export-btn').addEventListener('click', function () {
+    var headerRow = ['Responden', 'Task', 'Waktu (mm:ss.cs)', 'Waktu (detik)', 'Error', 'Klik'];
+    var rows = [headerRow];
+    sessions.forEach(function (s) {
+      s.tasks.forEach(function (t) {
+        rows.push([s.name, t.task, fmt(t.elapsedMs), (t.elapsedMs / 1000).toFixed(2), t.errors, t.clicks]);
+      });
+    });
+    var csv = rows.map(function (r) {
+      return r.map(function (v) {
+        var str = String(v);
+        if (str.indexOf(',') > -1 || str.indexOf('"') > -1) {
+          str = '"' + str.replace(/"/g, '""') + '"';
+        }
+        return str;
+      }).join(',');
+    }).join('\n');
+
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'usability_timing_results_' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Recover an in-progress draft session if the page was refreshed mid-task
+  (function recoverDraft() {
+    var draftRaw = localStorage.getItem(draftKey);
+    if (draftRaw) {
+      try {
+        var draft = JSON.parse(draftRaw);
+        if (draft && draft.tasks && draft.tasks.length) {
+          var note = document.getElementById('prior-data-note');
+          note.classList.remove('hidden');
+          note.textContent = 'Ditemukan sesi responden "' + draft.name + '" yang belum diselesaikan. Memuat ulang sesi tersebut.';
+          current = draft;
+          taskCount = draft.tasks.length;
+          document.getElementById('session-name').textContent = draft.name;
+          showScreen('session-screen');
+          renderTasks();
+          return;
+        }
+      } catch (e) {}
+    }
+    if (sessions.length > 0) {
+      showScreen('export-screen');
+      renderExportScreen();
+    } else {
+      showScreen('setup-screen');
+    }
+  })();
+})();
+</script>
+</body>
+</html>
