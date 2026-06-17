@@ -317,10 +317,9 @@
       ]);
 
       var startBtn = el('button', {
-        text: t.running ? 'Berjalan' : (t.elapsedMs > 0 ? 'Lanjut' : 'Mulai'),
-        disabled: t.running ? 'true' : null
+        text: t.running ? 'Berjalan' : (t.elapsedMs > 0 ? 'Lanjut' : 'Mulai')
       });
-      if (t.running) startBtn.disabled = true;
+      startBtn.disabled = !!t.running;
       startBtn.addEventListener('click', function () {
         if (t.running) return;
         t.running = true;
