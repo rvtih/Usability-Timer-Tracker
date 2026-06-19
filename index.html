@@ -26,53 +26,33 @@
     color: var(--text);
     -webkit-tap-highlight-color: transparent;
   }
-  .wrap {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 24px 16px 64px;
-  }
+  .wrap { max-width: 540px; margin: 0 auto; padding: 24px 16px 64px; }
   h1 { font-size: 20px; font-weight: 600; margin: 0 0 4px; }
   .sub { font-size: 13px; color: var(--text-secondary); margin: 0 0 24px; }
   label { font-size: 13px; color: var(--text-secondary); display: block; margin-bottom: 6px; }
   input[type="text"], textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: inherit;
-    background: var(--card);
-    color: var(--text);
+    width: 100%; border: 1px solid var(--border); border-radius: var(--radius-md);
+    padding: 10px 12px; font-size: 14px; font-family: inherit;
+    background: var(--card); color: var(--text);
   }
   input[type="text"] { height: 40px; }
-  textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
+  textarea { resize: vertical; line-height: 1.5; }
   input[type="text"]:focus, textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-bg);
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg);
   }
   button {
-    border: 1px solid var(--border);
-    background: var(--card);
-    border-radius: var(--radius-md);
-    padding: 10px 14px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    cursor: pointer;
-    transition: background 0.1s, transform 0.05s;
+    border: 1px solid var(--border); background: var(--card);
+    border-radius: var(--radius-md); padding: 10px 14px;
+    font-size: 14px; font-weight: 500; color: var(--text);
+    cursor: pointer; transition: background 0.1s, transform 0.05s;
     touch-action: manipulation;
   }
   button:hover { background: #f0efe9; }
   button:active { transform: scale(0.97); background: #e8e7e1; }
   button:disabled { opacity: 0.38; cursor: default; transform: none; }
   .btn-primary {
-    width: 100%;
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-    padding: 13px;
-    font-size: 15px;
+    width: 100%; background: var(--accent); color: #fff;
+    border-color: var(--accent); padding: 13px; font-size: 15px;
   }
   .btn-primary:hover { background: #134f8c; }
   .btn-primary:active { background: #0f3f70; }
@@ -80,132 +60,80 @@
   .btn-danger-outline { color: var(--danger); border-color: #f5c6c6; background: #fff8f8; }
   .btn-danger-outline:hover { background: var(--danger-bg); }
 
-  /* CARD */
   .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    margin-bottom: 14px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 16px; margin-bottom: 14px;
   }
 
-  /* TOP ROW: task label + timer */
-  .task-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .task-label { font-size: 14px; font-weight: 600; }
+  /* task header */
+  .task-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .task-label { font-size: 15px; font-weight: 700; flex-shrink: 0; margin-right: 12px; }
   .timer-display {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 24px; font-weight: 700;
     font-family: 'SF Mono', Menlo, Consolas, monospace;
-    letter-spacing: 0.5px;
-    color: var(--accent);
+    letter-spacing: 0.5px; color: var(--accent); white-space: nowrap;
   }
 
-  /* TIMER BUTTONS */
-  .btn-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  /* task description */
+  .task-title {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    margin: 0 0 4px;
+  }
+  .task-scenario {
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.55; margin: 0 0 6px;
+    border-left: 3px solid var(--border);
+    padding-left: 10px;
+    font-style: italic;
+  }
+  .task-goal {
+    font-size: 12px; color: var(--accent);
+    font-weight: 500; margin: 0 0 12px;
+  }
+  .task-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+  /* timer buttons */
+  .btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
   .btn-row button { flex: 1; font-size: 13px; padding: 10px 8px; }
 
-  /* KLIK COUNTER — big tap target */
+  /* klik counter */
   .klik-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--bg);
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg); border-radius: var(--radius-md);
+    padding: 10px 12px; margin-bottom: 12px;
   }
-  .klik-label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-    width: 36px;
-  }
-  .klik-minus, .klik-plus {
-    width: 52px;
-    height: 52px;
-    font-size: 24px;
-    font-weight: 400;
-    padding: 0;
-    flex-shrink: 0;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .klik-label { font-size: 13px; color: var(--text-secondary); flex-shrink: 0; width: 36px; }
+  .klik-minus {
+    width: 52px; height: 52px; font-size: 22px; padding: 0;
+    flex-shrink: 0; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
   }
   .klik-plus {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-    font-size: 28px;
-    font-weight: 600;
-    flex: 1;
-    width: auto;
-    height: 56px;
+    background: var(--accent); color: #fff; border-color: var(--accent);
+    font-size: 28px; font-weight: 700; flex: 1; height: 56px; padding: 0;
+    border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
   }
   .klik-plus:hover { background: #134f8c; }
   .klik-plus:active { background: #0f3f70; transform: scale(0.97); }
-  .klik-value {
-    font-size: 22px;
-    font-weight: 700;
-    min-width: 36px;
-    text-align: center;
-    flex-shrink: 0;
-  }
+  .klik-value { font-size: 22px; font-weight: 700; min-width: 36px; text-align: center; flex-shrink: 0; }
 
-  /* CATATAN */
-  .catatan-label {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-bottom: 5px;
-  }
+  /* catatan */
+  .catatan-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
 
-  /* SESSION HEADER */
-  .session-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-  }
+  /* session */
+  .session-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
   .session-header .name { font-size: 18px; font-weight: 600; margin: 0; }
   .session-header .meta-label { font-size: 12px; color: var(--text-secondary); margin: 0 0 2px; }
 
-  /* SUMMARY */
-  .stat-box {
-    background: var(--bg);
-    border-radius: var(--radius-md);
-    padding: 16px;
-    text-align: center;
-    margin-bottom: 16px;
-  }
+  /* export */
+  .stat-box { background: var(--bg); border-radius: var(--radius-md); padding: 16px; text-align: center; margin-bottom: 16px; }
   .stat-box .num { font-size: 28px; font-weight: 600; }
   .stat-box .lbl { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
 
   .hidden { display: none !important; }
-
-  .footer-note {
-    font-size: 12px;
-    color: var(--text-secondary);
-    text-align: center;
-    margin-top: 24px;
-    line-height: 1.5;
-  }
-  .table-preview {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    margin-top: 12px;
-  }
-  .table-preview th, .table-preview td {
-    border-bottom: 1px solid var(--border);
-    padding: 6px 4px;
-    text-align: left;
-    vertical-align: top;
-  }
+  .footer-note { font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 24px; line-height: 1.5; }
+  .table-preview { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+  .table-preview th, .table-preview td { border-bottom: 1px solid var(--border); padding: 6px 4px; text-align: left; vertical-align: top; }
   .table-preview th { color: var(--text-secondary); font-weight: 500; }
 </style>
 </head>
@@ -216,10 +144,6 @@
 
   <!-- SETUP SCREEN -->
   <div id="setup-screen">
-    <div style="margin-bottom:16px;">
-      <label for="task-count-input">Jumlah task per responden</label>
-      <input type="text" id="task-count-input" value="6" inputmode="numeric" />
-    </div>
     <div style="margin-bottom:20px;">
       <label for="respondent-name">Nama / ID responden</label>
       <input type="text" id="respondent-name" placeholder="contoh: R01" />
@@ -263,30 +187,56 @@
   var STORAGE_KEY = 'usability_timer_sessions_v2';
   var DRAFT_KEY   = 'usability_timer_draft_v2';
 
+  var TASKS_DEF = [
+    {
+      title: 'Identifikasi Barang dengan Stok Habis',
+      scenario: 'Anda adalah pengelola gudang di sebuah UMKM. Hari ini Anda diminta melaporkan barang apa saja yang stoknya sudah habis. Tunjukkan bagaimana Anda menemukan informasi tersebut menggunakan sistem yang tersedia.',
+      goal: '→ Sebutkan minimal 3 nama barang yang stoknya habis.'
+    },
+    {
+      title: 'Identifikasi Barang dengan Stok Kritis/Rendah (Early Warning)',
+      scenario: 'Pemilik usaha ingin mencegah kehabisan stok sebelum terjadi. Anda diminta menemukan barang-barang yang stoknya mulai menipis — yaitu yang sudah mendekati batas minimum tetapi belum habis — agar bisa segera diambil tindakan.',
+      goal: '→ Sebutkan minimal 2 nama barang berstok rendah/kritis.'
+    },
+    {
+      title: 'Pengecekan Stok Aktual Barang Tertentu',
+      scenario: "Seorang pelanggan menghubungi Anda dan menanyakan apakah barang 'Mouse Windah' masih tersedia dan berapa jumlahnya. Tunjukkan bagaimana Anda mengecek informasi stok barang tersebut menggunakan sistem.",
+      goal: "→ Sebutkan jumlah stok aktual barang 'Mouse Windah'."
+    },
+    {
+      title: 'Penentuan Prioritas Barang untuk Restock',
+      scenario: 'Anda memiliki anggaran restock terbatas hari ini dan hanya bisa memesan untuk beberapa barang. Tunjukkan bagaimana Anda menentukan barang mana yang paling perlu di-restock terlebih dahulu berdasarkan kondisi stok yang ada di sistem.',
+      goal: '→ Sebutkan urutan prioritas barang yang perlu di-restock beserta alasannya (minimal 3).'
+    },
+    {
+      title: 'Respon terhadap Notifikasi Stok Kritis',
+      scenario: 'Anda baru saja mendapat notifikasi bahwa ada barang yang stoknya sudah kritis. Tunjukkan bagaimana Anda merespons notifikasi tersebut — mulai dari membuka notifikasi, menemukan barang yang dimaksud, hingga membuat catatan bahwa barang tersebut perlu di-restock.',
+      goal: '→ Sebutkan nama barang dari notifikasi dan tindakan lanjutan yang dilakukan.'
+    },
+    {
+      title: 'Pemantauan Kondisi Stok Gudang Secara Keseluruhan',
+      scenario: 'Setiap pagi sebelum memulai aktivitas, Anda perlu memantau kondisi stok gudang secara keseluruhan. Tunjukkan bagaimana Anda mendapatkan gambaran umum kondisi stok hari ini — termasuk berapa barang yang habis, kritis, dan aman.',
+      goal: '→ Sebutkan kondisi stok yang ditemukan (minimal 3: jumlah barang habis, kritis, dan aman).'
+    }
+  ];
+
   function loadSessions() {
     try { var r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
     catch(e) { return []; }
   }
-  function saveSessions(s) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e) {}
-  }
-  function saveDraft(c) {
-    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(c)); } catch(e) {}
-  }
-  function clearDraft() {
-    try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
-  }
+  function saveSessions(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e) {} }
+  function saveDraft(c)    { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(c)); } catch(e) {} }
+  function clearDraft()    { try { localStorage.removeItem(DRAFT_KEY); } catch(e) {} }
 
-  var sessions  = loadSessions();
-  var current   = null;
-  var taskCount = 6;
+  var sessions = loadSessions();
+  var current  = null;
 
   function makeTask(i) {
     return { task: i+1, running:false, startTs:null, elapsedMs:0, clicks:0, catatan:'' };
   }
-  function newSession(name, count) {
+  function newSession(name) {
     var tasks = [];
-    for (var i=0; i<count; i++) tasks.push(makeTask(i));
+    for (var i=0; i<6; i++) tasks.push(makeTask(i));
     return { name:name, tasks:tasks, createdAt: new Date().toISOString() };
   }
 
@@ -298,12 +248,12 @@
     return (m<10?'0':'')+m+':'+(ss<10?'0':'')+ss+'.'+(cs<10?'0':'')+cs;
   }
 
-  /* ── RENDER ── */
   function renderTasks() {
     var list = document.getElementById('task-list');
     list.innerHTML = '';
 
     current.tasks.forEach(function(t, idx) {
+      var def = TASKS_DEF[idx];
 
       /* timer display */
       var timeEl = document.createElement('span');
@@ -311,15 +261,31 @@
       timeEl.id = 'time-' + idx;
       timeEl.textContent = fmt(t.elapsedMs);
 
-      var topRow = document.createElement('div');
-      topRow.className = 'task-top';
+      var taskTop = document.createElement('div');
+      taskTop.className = 'task-top';
       var lbl = document.createElement('span');
       lbl.className = 'task-label';
       lbl.textContent = 'Task ' + t.task;
-      topRow.appendChild(lbl);
-      topRow.appendChild(timeEl);
+      taskTop.appendChild(lbl);
+      taskTop.appendChild(timeEl);
 
-      /* mulai button */
+      /* task description */
+      var taskTitle = document.createElement('p');
+      taskTitle.className = 'task-title';
+      taskTitle.textContent = def.title;
+
+      var taskScenario = document.createElement('p');
+      taskScenario.className = 'task-scenario';
+      taskScenario.textContent = def.scenario;
+
+      var taskGoal = document.createElement('p');
+      taskGoal.className = 'task-goal';
+      taskGoal.textContent = def.goal;
+
+      var divider = document.createElement('hr');
+      divider.className = 'task-divider';
+
+      /* mulai */
       var startBtn = document.createElement('button');
       startBtn.textContent = t.running ? 'Berjalan…' : (t.elapsedMs > 0 ? 'Lanjut' : 'Mulai');
       startBtn.disabled = t.running;
@@ -329,11 +295,11 @@
         t.startTs = Date.now() - t.elapsedMs;
         saveDraft(current);
         startBtn.textContent = 'Berjalan…';
-        startBtn.disabled = true;
-        stopBtn.disabled  = false;
+        startBtn.disabled    = true;
+        stopBtn.disabled     = false;
       });
 
-      /* stop button */
+      /* stop */
       var stopBtn = document.createElement('button');
       stopBtn.textContent = 'Stop';
       stopBtn.disabled = !t.running;
@@ -342,20 +308,18 @@
         t.elapsedMs = Date.now() - t.startTs;
         t.running   = false;
         saveDraft(current);
-        timeEl.textContent    = fmt(t.elapsedMs);
-        startBtn.textContent  = 'Lanjut';
-        startBtn.disabled     = false;
-        stopBtn.disabled      = true;
+        timeEl.textContent   = fmt(t.elapsedMs);
+        startBtn.textContent = 'Lanjut';
+        startBtn.disabled    = false;
+        stopBtn.disabled     = true;
       });
 
-      /* reset button */
+      /* reset */
       var resetBtn = document.createElement('button');
       resetBtn.textContent = '↺';
       resetBtn.setAttribute('aria-label', 'Reset task ' + t.task);
       resetBtn.addEventListener('click', function() {
-        t.running   = false;
-        t.elapsedMs = 0;
-        t.startTs   = null;
+        t.running = false; t.elapsedMs = 0; t.startTs = null;
         saveDraft(current);
         timeEl.textContent   = fmt(0);
         startBtn.textContent = 'Mulai';
@@ -369,7 +333,7 @@
       btnRow.appendChild(stopBtn);
       btnRow.appendChild(resetBtn);
 
-      /* ── KLIK COUNTER (big tap) ── */
+      /* klik counter */
       var klikLabel = document.createElement('span');
       klikLabel.className = 'klik-label';
       klikLabel.textContent = 'Klik';
@@ -381,7 +345,7 @@
       var minusBtn = document.createElement('button');
       minusBtn.className = 'klik-minus';
       minusBtn.textContent = '–';
-      minusBtn.setAttribute('aria-label', 'Kurangi klik task ' + t.task);
+      minusBtn.setAttribute('aria-label', 'Kurangi klik');
       minusBtn.addEventListener('click', function() {
         t.clicks = Math.max(0, t.clicks - 1);
         klikVal.textContent = t.clicks;
@@ -391,7 +355,7 @@
       var plusBtn = document.createElement('button');
       plusBtn.className = 'klik-plus';
       plusBtn.textContent = '+';
-      plusBtn.setAttribute('aria-label', 'Tambah klik task ' + t.task);
+      plusBtn.setAttribute('aria-label', 'Tambah klik');
       plusBtn.addEventListener('click', function() {
         t.clicks++;
         klikVal.textContent = t.clicks;
@@ -405,23 +369,28 @@
       klikSection.appendChild(klikVal);
       klikSection.appendChild(plusBtn);
 
-      /* ── CATATAN KUALITATIF ── */
+      /* catatan */
       var catatanLbl = document.createElement('p');
       catatanLbl.className = 'catatan-label';
-      catatanLbl.textContent = 'Catatan';
+      catatanLbl.textContent = 'Catatan observasi';
 
       var catatanArea = document.createElement('textarea');
-      catatanArea.placeholder = 'Tulis observasi, kebingungan, komentar responden…';
+      catatanArea.placeholder = 'Tulis observasi, kebingungan, atau komentar responden…';
       catatanArea.value = t.catatan || '';
+      catatanArea.rows = 3;
       catatanArea.addEventListener('input', function() {
         t.catatan = catatanArea.value;
         saveDraft(current);
       });
 
-      /* assemble card */
+      /* assemble */
       var card = document.createElement('div');
       card.className = 'card';
-      card.appendChild(topRow);
+      card.appendChild(taskTop);
+      card.appendChild(taskTitle);
+      card.appendChild(taskScenario);
+      card.appendChild(taskGoal);
+      card.appendChild(divider);
       card.appendChild(btnRow);
       card.appendChild(klikSection);
       card.appendChild(catatanLbl);
@@ -430,7 +399,7 @@
     });
   }
 
-  /* live timer tick */
+  /* live tick */
   setInterval(function() {
     if (!current) return;
     current.tasks.forEach(function(t, idx) {
@@ -441,12 +410,13 @@
     });
   }, 100);
 
-  /* ── SCREENS ── */
   function showScreen(id) {
     ['setup-screen','session-screen','export-screen'].forEach(function(s) {
       document.getElementById(s).classList.toggle('hidden', s !== id);
     });
   }
+
+  function esc(str) { var d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
 
   function renderExportScreen() {
     document.getElementById('respondent-count').textContent = sessions.length;
@@ -463,19 +433,11 @@
     table.innerHTML = rows;
   }
 
-  function esc(str) {
-    var d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-  }
-
-  /* ── EVENTS ── */
+  /* events */
   document.getElementById('start-session-btn').addEventListener('click', function() {
-    var c = parseInt(document.getElementById('task-count-input').value, 10);
-    taskCount = (isFinite(c) && c > 0) ? c : 6;
     var name = document.getElementById('respondent-name').value.trim() ||
                ('R' + String(sessions.length + 1).padStart(2, '0'));
-    current = newSession(name, taskCount);
+    current = newSession(name);
     saveDraft(current);
     document.getElementById('session-name').textContent = name;
     showScreen('session-screen');
@@ -502,19 +464,20 @@
 
   document.getElementById('clear-all-btn').addEventListener('click', function() {
     if (!confirm('Hapus semua data? Tindakan ini tidak bisa dibatalkan.')) return;
-    sessions = [];
-    saveSessions(sessions);
-    clearDraft();
-    renderExportScreen();
+    sessions = []; saveSessions(sessions); clearDraft(); renderExportScreen();
   });
 
   document.getElementById('export-btn').addEventListener('click', function() {
-    var header = ['Responden','Task','Waktu (mm:ss.cs)','Waktu (detik)','Klik','Catatan'];
+    var header = ['Responden','Task','Judul Task','Waktu (mm:ss.cs)','Waktu (detik)','Klik','Catatan'];
     var rows = [header];
     sessions.forEach(function(s) {
-      s.tasks.forEach(function(t) {
-        rows.push([s.name, t.task, fmt(t.elapsedMs), (t.elapsedMs/1000).toFixed(2),
-                   t.clicks, t.catatan || '']);
+      s.tasks.forEach(function(t, idx) {
+        rows.push([
+          s.name, t.task,
+          TASKS_DEF[idx] ? TASKS_DEF[idx].title : '',
+          fmt(t.elapsedMs), (t.elapsedMs/1000).toFixed(2),
+          t.clicks, t.catatan || ''
+        ]);
       });
     });
     var csv = rows.map(function(r) {
@@ -527,15 +490,13 @@
     var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     var url  = URL.createObjectURL(blob);
     var a    = document.createElement('a');
-    a.href   = url;
+    a.href = url;
     a.download = 'usability_results_' + new Date().toISOString().slice(0,10) + '.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
   });
 
-  /* ── DRAFT RECOVERY ── */
+  /* draft recovery */
   (function() {
     try {
       var raw = localStorage.getItem(DRAFT_KEY);
@@ -546,7 +507,6 @@
           note.classList.remove('hidden');
           note.textContent = 'Memulihkan sesi responden "' + draft.name + '" yang belum selesai.';
           current = draft;
-          taskCount = draft.tasks.length;
           document.getElementById('session-name').textContent = draft.name;
           showScreen('session-screen');
           renderTasks();
